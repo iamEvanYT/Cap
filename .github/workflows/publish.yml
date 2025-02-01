@@ -147,16 +147,8 @@ jobs:
           CI: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload assets
-        uses: crabnebula-dev/cloud-release@v0
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
         with:
-          command: release upload ${{ env.CN_APPLICATION }} "${{ needs.draft.outputs.version }}" --framework tauri
-          api-key: ${{ secrets.CN_API_KEY }}
-
-      - name: Upload debug symbols to Sentry
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-        working-directory: target
-        run: |
-          curl -sL https://sentry.io/get-cli/ | bash
-          sentry-cli debug-files upload -o ${{ env.SENTRY_ORG }} -p ${{ env.SENTRY_PROJECT }} Cap.dSYM
+          name: cap-desktop-${{ matrix.settings.target }}-${{ needs.draft.outputs.version }}
+          path: src-tauri/target/release/bundle
