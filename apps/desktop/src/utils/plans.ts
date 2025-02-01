@@ -20,13 +20,5 @@ export const getProPlanId = (billingCycle: "yearly" | "monthly") => {
 };
 
 export function isUserOnProPlan({ subscriptionStatus }: { subscriptionStatus: string | null }): boolean {
-  if (
-    subscriptionStatus === "active" ||
-    subscriptionStatus === "trialing" ||
-    subscriptionStatus === "complete" ||
-    subscriptionStatus === "paid"
-  ) {
-    return true;
-  }
-  return false;
+  return true;
 }
